@@ -90,7 +90,7 @@ function askQuestion(clueNumber, clues, correctCountryDict) {
       `Clue ${clueNumber + 1}, ${currentClue}: ${clues[currentClue]}`
     );
     rl.question("Enter your guess for the country: ", (userInput) => {
-      console.log("You entered: ", userInput);
+      // console.log("You entered: ", userInput);
       // check if correct
       if (
         userInput.toLowerCase() ===
@@ -131,6 +131,15 @@ function askQuestion(clueNumber, clues, correctCountryDict) {
         );
         resolve(false);
       } else {
+        if (clueNumber == 10) {
+          console.log(
+            "You have run out of clues. The correct country was: ",
+            correctCountryDict["official_country_name"]
+          );
+          console.log("Goodbye!");
+          rl.close();
+          resolve(true);
+        }
         console.log("Incorrect. Try again!");
         resolve(false);
       }
@@ -147,6 +156,7 @@ async function runGame(correctCountryDict, clues, clueNumber = 0) {
       break;
     }
     clueNumber++;
+    console.log(`You have ${10 - clueNumber}, clues left.`);
   }
 }
 
